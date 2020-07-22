@@ -8,4 +8,5 @@ const WeatherLocation=()=>(
         <WeatherData></WeatherData>
     </div>
 );
+
 export default WeatherLocation;
