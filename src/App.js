@@ -6,7 +6,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <WeatherLocation></WeatherLocation>
+      <WeatherLocation city={"San Luis Potosi,mx"}></WeatherLocation>
     </div>
   );
 }
