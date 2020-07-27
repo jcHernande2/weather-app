@@ -1,10 +1,15 @@
 import React,{Component} from 'react';
-import {Grid,Row,Col} from 'react-flexbox-grid'
+import Paper from '@material-ui/core/Paper';
+import AppBar from '@material-ui/core/AppBar';
+import Typography from '@material-ui/core/Typography';
+import ToolBar from '@material-ui/core/Toolbar';
+import {Grid,Row,Col} from 'react-flexbox-grid';
 import WeatherLocation from './components/WeatherLocation';
 import logo from './logo.svg';
 import './App.css';
 import LocationList from './components/LocationList';
-import { MuiThemeProvider } from '@material-ui/core';
+import ForecastExtended from './components/ForecastExtended';
+//import { MuiThemeProvider } from '@material-ui/core';
 
 const cities=[
   "San Luis Potosi,mx",
@@ -13,43 +18,52 @@ const cities=[
 ];
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state={city:null};
+  }
+
   handleSelectedLocation=city=>{
+    this.setState({city});
     console.log(`handleSelectedLocation ${city}`);
   }
   render(){
+    const {city}=this.state;
     return (
-      <MuiThemeProvider>
+     
       <Grid fluid>
         <Row>
-          <h1>Grid Sistem</h1>
-        </Row>
+          <Col xs={12}>
+          <AppBar title="Weather App">
+            <ToolBar>
+              <Typography variant='title' color='inherit'>
+                Weather App
+              </Typography>
+            </ToolBar>
+          </AppBar>
+          </Col>
+        </Row>        
         <Row>
-          <h1>Las Columnas</h1>
-        </Row>
-        <Row>
-          <Col xs={2} md={3}>
-            <div className="red">Hello, world!</div>
+          <Col xs={12} md={6}>
+            <LocationList cities={cities}
+          onSelectedLocation={this.handleSelectedLocation}>
+          </LocationList> 
           </Col>
-          <Col xs={2} md={3}>
-            <div className="green">Hello, world!</div>
-          </Col>
-          <Col xs={2} md={3}>
-            <div className="blue">Hello, world!</div>
-          </Col>
-          <Col xs={6} md={3}>
-            <div className="yellow">Hello, world!</div>
+          <Col xs={12} md={6}>
+            <Paper zDepth={4}>
+              <div className="detail">
+                {
+                city&&
+                <ForecastExtended city={city}>
+                </ForecastExtended>
+              
+                
+                }
+              </div>
+            </Paper>
           </Col>
         </Row>
       </Grid>
-      
-      {/*
-      <div className="App">
-        <LocationList cities={cities}
-        onSelectedLocation={this.handleSelectedLocation}
-        >
-        </LocationList>      
-      </div>*/}
-      </MuiThemeProvider>
     );
   }
 }

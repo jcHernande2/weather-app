@@ -9,7 +9,7 @@ import{
     DRIZZLE,
 } from './../constants/weathers';
 const getTemp=kelvin=>{
-    return parseFloat(convert(kelvin).from("K").to("C").toFixed(2));
+    return parseFloat(convert(kelvin).from("K").to("C").toFixed(0));
 }
 const getWeatherState=weather=>{
     const {id}=weather;
