@@ -12,9 +12,11 @@ import ForecastExtended from './components/ForecastExtended';
 //import { MuiThemeProvider } from '@material-ui/core';
 
 const cities=[
-  "San Luis Potosi,mx",
-  "Monterrey,mx",
+  "Buenos Aires,ar",
+  "Washington,us",
+  "Bogota,co",
   "Mexico,mx",
+  "Madrid,es",
 ];
 
 class App extends Component {

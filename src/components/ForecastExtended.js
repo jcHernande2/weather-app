@@ -23,11 +23,11 @@ const url_base_weather="http://api.openweathermap.org/data/2.5/forecast";
 class ForecastExtended extends Component{
     constructor(){
         super();
-        this.state={forecastDate:null};
+        this.state={forecastData:null};
     }
-    renderForecastItemDays(forecastDate){
+    renderForecastItemDays(forecastData){
         
-        return forecastDate.map(forcast=>(
+        return forecastData.map(forcast=>(
             <ForecastItem 
                 key={`${forcast.weekDay}${forcast.hour}`} 
                 weekDay={forcast.day}
@@ -38,29 +38,41 @@ class ForecastExtended extends Component{
     componentDidMount()
     {
         //fetch or axios
-        const url_forecast=`${url_base_weather}?q=${this.props.city}&appid=${api_key}`;
+        this.updateCity(this.props.city);
+    } 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.city!==this.props.city)
+        {
+            this.setState({forecastData:null})
+            this.updateCity(this.props.city);
+        }
+    }
+    
+    updateCity=city=>{
+        const url_forecast=`${url_base_weather}?q=${city}&appid=${api_key}`;
         fetch(url_forecast).then(
             data=>(data.json())
         ).then(
             weather_data=>{
                 console.log({weather_data});
                 const forecastData =transformForecast(weather_data);
-                console.log({forecastData});
+                console.log(forecastData);
                 this.setState({forecastData});
             }
         )
-    } 
+    }
     renderProgress(){
         return <h3>cargando pronostico extenedido</h3>;
     }
     render(){
         const {city}=this.props;
-        const {forecastDate}=this.state;
+        const {forecastData}=this.state;
+        
         return(
         <div>
             <h2 className="forecast-title">Pronostico Extendido {city}</h2>
-            {forecastDate?
-            this.renderForecastItemDays(forecastDate)
+            {forecastData?
+            this.renderForecastItemDays(forecastData)
             :this.renderProgress()
             }
         </div>);
